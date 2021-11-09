@@ -6,14 +6,17 @@ import Search from "./components/search/Search";
 import Reservation from "./components/reservation/Reservation";
 import Home from "./components/home/Home";
 import Header from "./components/header/Header";
+import Login from "./components/login/Login";
 function App() {
   return (
     <Router>
       <Header />
-
       <Switch>
         <Route path="/" exact>
           <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route path="/flights">
           <Flights />
