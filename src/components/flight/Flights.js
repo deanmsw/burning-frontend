@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import FlightDisplay from "./FlightDisplay";
 import "./flights.css";
-const SERVER_URL = "http://http://localhost:3000/flights.json";
+const SERVER_URL = "http://localhost:3000/flights.json";
 export default class Flights extends Component {
   constructor() {
     super();
@@ -22,25 +22,25 @@ export default class Flights extends Component {
     const fetchflightDisplay = () => {
       axios(SERVER_URL).then((response) => {
         this.setState({ flightDisplay: response.data });
-        setTimeout(fetchflightDisplay, 4000);
+        // setTimeout(fetchflightDisplay, 4000);
       });
     };
     fetchflightDisplay();
   }
   saveFlights(flightnumber, origin, destination, date, airplane_id) {
-    axios
-      .post(SERVER_URL, {
-        flightnumber: flightnumber,
-        origin: origin,
-        destination: destination,
-        date: date,
-        airplane_id: airplane_id,
-      })
-      .then((response) => {
-        this.setState({
-          flightDisplay: [...this.state.flightDisplay, response.data],
-        });
-      });
+    // axios
+    //   .post(SERVER_URL, {
+    //     flightnumber: flightnumber,
+    //     origin: origin,
+    //     destination: destination,
+    //     date: date,
+    //     airplane_id: airplane_id,
+    //   })
+    // .then((response) => {
+    //   this.setState({
+    //     flightDisplay: [...this.state.flightDisplay, response.data],
+    //   });
+    // });
   }
 
   _handleCreate(event) {
@@ -53,6 +53,8 @@ export default class Flights extends Component {
       date: this.state.date,
       airplane_id: this.state.airplane_id,
     };
+    // console.log(renderingData);
+    axios.post(SERVER_URL, renderingData);
     this.setState({
       flightDisplay: [...this.state.flightDisplay, renderingData],
     });
