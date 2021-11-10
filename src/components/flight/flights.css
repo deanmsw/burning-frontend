@@ -1,0 +1,4 @@
+.flightsDisplay {
+  display: flex;
+  justify-content: space-between;
+}
