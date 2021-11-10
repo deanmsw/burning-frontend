@@ -56,20 +56,21 @@ class PlaneForm extends Component {
     super();
     this.state = {
       name: "",
-      row:
+      rows: "",
+      cols: "",
     };
     this._handleChange = this._handleChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   _handleChange(event) {
-    this.setState({ content: event.target.value });
+    this.setState({ name: event.target.value });
   }
 
   _handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(this.state.content);
-    this.setState({ content: " " });
+    this.props.onSubmit(this.state.name);
+    this.setState({ name: " " });
   }
 
   render() {
@@ -89,7 +90,7 @@ const PlanesList = (props) => {
       {props.planes.map((s) => (
         <div className="plane">
           <p>
-            Name: {s.name} Rows: {s.row} Columns: {s.col}
+            Name: {s.name} Rows: {s.rows} Columns: {s.cols}
           </p>
         </div>
       ))}
