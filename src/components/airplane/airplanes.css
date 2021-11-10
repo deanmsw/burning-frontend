@@ -1,0 +1,25 @@
+.plane-container {
+  display: flex;
+  width: 60vw;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(214, 214, 214, 0.849);
+}
+
+.plane-header {
+  display: flex;
+  width: 60vw;
+}
+
+.plane-search-box {
+  display: flex;
+  width: 25rem;
+  border: 1px solid black;
+}
+
+.plane-list {
+  width: 25rem;
+  border: 1px solid black;
+  display: flex;
+}
