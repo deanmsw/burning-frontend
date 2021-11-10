@@ -1,0 +1,27 @@
+.reservation-container {
+  margin: 0 auto;
+  display: flex;
+  width: 60vw;
+  border: 1px solid grey;
+  justify-content: center;
+  background-color: rgba(214, 214, 214, 0.849);
+}
+.reservation-container, h3 {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 50px;
+  text-decoration: underline;
+}
+
+.submit {
+  padding: 5px;
+}
+.info {
+  padding-left: 20px;
+  text-align: center;
+  margin: 0 auto;
+}
