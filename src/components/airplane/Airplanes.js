@@ -40,7 +40,7 @@ export default class Airplanes extends Component {
 
   render() {
     return (
-      <div>
+      <div className="main-content">
         <div className="plane-container">
           <div className="plane-header">
             <h1>Create a new plane</h1>
@@ -49,7 +49,7 @@ export default class Airplanes extends Component {
             <PlaneForm onSubmit={this.savePlane} />
           </div>
           <div className="delete-form">
-            {/* <DeletePlane onSubmit={this.deletePlane} /> */}
+            <DeletePlane onSubmit={this.deletePlane} />
           </div>
           <div className="plane-list">
             <PlanesList planes={this.state.airplanes} />
@@ -129,28 +129,42 @@ class PlaneForm extends Component {
   }
 }
 
-// const DeletePlane = (props) => {
+class DeletePlane extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: "",
+      name: "",
+      rows: "",
+      cols: "",
+    };
+  }
 
-//     _handleDelete(event) {
-//     event.preventDefault();
-//     this.props.onSubmit(this.state.id); //TODO
-//     this.setState({ id: "", name: " ", rows: "", cols: "" });
-//   }
+  //TODO: currently not working:
+  _handleDelete(event) {
+    event.preventDefault();
+    this.onSubmit(this.state.id); //TODO???
+    this.setState({ id: "", name: " ", rows: "", cols: "" });
+  }
 
-//   <div className="delete-field">
-//     <form onSubmit={this.deletePlane}>
-//       <label>Delete Plane ID: </label>
-//       <input
-//         type="search"
-//         name="id"
-//         placeholder="ID #"
-//         onChange={this._handleChange}
-//         value={this.state.id}
-//       />
-//       <button>Delete Plane</button>
-//     </form>
-//   </div>;
-// };
+  render() {
+    return (
+      <div className="delete-field">
+        <form onSubmit={this._handleDelete}>
+          <label>Delete Plane ID: </label>
+          <input
+            type="search"
+            name="id"
+            placeholder="ID #"
+            onChange={this._handleChange}
+            // value={this.state.id}
+          />
+          <button>Delete Plane</button>
+        </form>
+      </div>
+    );
+  }
+}
 
 // Always expect to receive props.
 const PlanesList = (props) => {

@@ -1,36 +1,33 @@
+.main-content {
+  display: flex;
+}
+
 .plane-container {
-  padding: 20px;
+  margin: 20px auto;
+  padding: 0px 10px 10px 10px;
   display: flex;
   width: 60vw;
   border: 1px solid grey;
-  display: flex;
   background-color: rgba(214, 214, 214, 0.849);
   align-items: center;
   flex-direction: column;
   align-content: stretch;
-  justify-content: space-evenly;
 }
 
 .plane-header {
   padding: 20px;
   display: flex;
-  width: 60vw;
-  justify-content: center;
 }
 
 .add-plane-form {
   padding: 20px;
-  display: flex;
-  width: 25rem;
   border: 1px solid black;
-  justify-content: center;
 }
 
 .plane-list {
-  padding: 20px;
-  width: 25rem;
+  /* padding: 20px;
+  width: 25rem; */
   border: 1px solid black;
-  display: flex;
 }
 
 .plane-form {
