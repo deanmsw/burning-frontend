@@ -8,8 +8,8 @@ export default class Airplanes extends Component {
   constructor() {
     super();
     this.state = {
-      // TODO: replace this via AJAX from the planes server
-      planes: [],
+      // TODO: replace this via AJAX from the airplanes server
+      airplanes: [],
     };
     this.savePlane = this.savePlane.bind(this);
   }
@@ -18,7 +18,7 @@ export default class Airplanes extends Component {
   componentDidMount() {
     const fetchPlanes = () => {
       axios(SERVER_URL).then((response) => {
-        this.setState({ planes: response.data });
+        this.setState({ airplanes: response.data });
         setTimeout(fetchPlanes, 5000);
       });
     };
@@ -28,7 +28,7 @@ export default class Airplanes extends Component {
 
   savePlane(content) {
     axios.post(SERVER_URL, { content: content }).then((response) => {
-      this.setState({ planes: [...this.state.planes, response.data] });
+      this.setState({ airplanes: [...this.state.airplanes, response.data] });
     });
   }
 
@@ -36,9 +36,63 @@ export default class Airplanes extends Component {
     return (
       <div>
         <div className="plane-container">
-          <div>Create a new plane</div>
+          <div className="plane-header">
+            <h1>Create a new plane</h1>
+          </div>
+          <div className="plane-search-box">
+            <PlaneForm onSubmit={this.savePlane} />
+          </div>
+          <div className="plane-list">
+            <PlanesList planes={this.state.airplanes} />
+          </div>
         </div>
       </div>
     );
   }
 }
+
+class PlaneForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: "",
+      row:
+    };
+    this._handleChange = this._handleChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
+  }
+
+  _handleChange(event) {
+    this.setState({ content: event.target.value });
+  }
+
+  _handleSubmit(event) {
+    event.preventDefault();
+    this.props.onSubmit(this.state.content);
+    this.setState({ content: " " });
+  }
+
+  render() {
+    return (
+      <form onSubmit={this._handleSubmit}>
+        <textarea onChange={this._handleChange} value={this.state.content}></textarea>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+
+// Always expect to receive props.
+const PlanesList = (props) => {
+  return (
+    <div>
+      {props.planes.map((s) => (
+        <div className="plane">
+          <p>
+            Name: {s.name} Rows: {s.row} Columns: {s.col}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+};
