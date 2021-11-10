@@ -1,0 +1,7 @@
+.plane-container {
+  width: 60vw;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(214, 214, 214, 0.849);
+}
