@@ -26,12 +26,12 @@ export default class Reservation extends Component {
     fetchReservations();
   }
 
-  saveReservation(seatnumber, origin, destination, date){
+  saveReservation(seatnumber, resorigin, resdestination, resdate){
     const reservation = {
       seatnumber: seatnumber,
-      origin: origin,
-      destination: destination,
-      date: date
+      resorigin: resorigin,
+      resdestination: resdestination,
+      resdate: resdate
     };
     this.setState({ reservation: [...this.state.reservation, reservation]  } );
     axios.post(SERVER_URL, {reservation}).then((result) => {
@@ -75,9 +75,9 @@ class ReservationForm extends Component {
       super();
       this.state = {
         seatnumber: '',
-        origin: '',
-        destination: '',
-        date: '',
+        resorigin: '',
+        resdestination: '',
+        resdate: '',
 
 
     };
@@ -94,8 +94,8 @@ class ReservationForm extends Component {
 
     _handleSubmit(event){
       event.preventDefault();
-      this.props.onSubmit(this.state.seatnumber, this.state.origin, this.state.destination, this.state.date );
-      this.setState( { seatnumber: '', origin: '', destination: '', date: '' });
+      this.props.onSubmit(this.state.seatnumber, this.state.resorigin, this.state.resdestination, this.state.resdate );
+      this.setState( { seatnumber: '', resorigin: '', resdestination: '', resdate: '' });
       // seats();
     }
 
@@ -125,13 +125,14 @@ class ReservationForm extends Component {
             <input type="text" name="seatnumber" placeholder="31B" onChange={ this._handleChange } value={ this.state.seatnumber }/>
 
             <h3>Origin</h3>
-            <input type="text" name="origin" placeholder="London" onChange={ this._handleChange } value={this.state.origin}/>
+            <input type="text" name="resorigin" placeholder="LON" onChange={ this._handleChange } value={this.state.resorigin}/>
 
             <h3>Destination</h3>
-            <input placeholder="Hong Kong" onChange={  (event) => {this.setState({ destination: event.target.value })}}/>
+            <input type="text" name="resdestination" placeholder="SYD" onChange={ this._handleChange } value={this.state.resdestination}/>
 
             <h3>Date</h3>
-            <input placeholder="2021-12-02" onChange={  (event) => {this.setState({ date: event.target.value })}}/>
+            <input type="text" name="resdate" placeholder="2021-12-02" onChange={ this._handleChange } value={this.state.resdate}/>
+
 
             <div className="submit">
               <input type="submit" value="Reservation" />
@@ -172,9 +173,9 @@ const ReservationList = (props) => {
                 {props.reservation.map((r) => (
                   <tr key={r.id}>
                     <td>{r.seatnumber}</td>
-                    <td>{r.origin}</td>
-                    <td>{r.destination}</td>
-                    <td>{r.date}</td>
+                    <td>{r.resorigin}</td>
+                    <td>{r.resdestination}</td>
+                    <td>{r.resdate}</td>
                   </tr>))}
               </tbody>
 
