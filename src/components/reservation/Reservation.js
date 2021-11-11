@@ -10,12 +10,33 @@ export default class Reservation extends Component {
     super();
     this.state = {
       reservation: []
-    }
+    };
     this.saveReservation = this.saveReservation.bind(this);
   }
 
+  // react component lifecycle:
+  componentDidMount() {
+    const fetchReservations = () => {
+      axios(SERVER_URL).then((response) => {
+        this.setState({ reservation: response.data });
+        // setTimeout(fetchPlanes, 5000);
+      });
+    };
 
-  saveReservation(content){ this.setState( { reservation: [...this.state.reservation, content]  } );
+    fetchReservations();
+  }
+
+  saveReservation(seatnumber, origin, destination, date){
+    const reservation = {
+      seatnumber: seatnumber,
+      origin: origin,
+      destination: destination,
+      date: date
+    };
+    this.setState({ reservation: [...this.state.reservation, reservation]  } );
+    axios.post(SERVER_URL, {reservation}).then((result) => {
+      console.log(result)
+    });
   }
 
 
@@ -28,18 +49,20 @@ export default class Reservation extends Component {
 
       </div>
 
-      <div class="info">
+      <div className="info">
         <FlightNumber />
         <Origin />
         <Destination />
         <Date />
       </div>
 
-      <div class="reservation-container">
+      <div className="reservation-container">
         <ReservationForm onSubmit={this.saveReservation}/>
-        <ReservationList reservation={ this.state.reservation }/>
       </div>
 
+      <div>
+          <ReservationList reservation={ this.state.reservation }/>
+      </div>
 
 
     </div>
@@ -51,7 +74,7 @@ class ReservationForm extends Component {
     constructor(){
       super();
       this.state = {
-        seats: '',
+        seatnumber: '',
         origin: '',
         destination: '',
         date: '',
@@ -63,20 +86,24 @@ class ReservationForm extends Component {
     }
 
     _handleChange(event){
-      this.setState( { content: event.target.value } )
-    }
+      const value = event.target.value;
+      this.setState( { ...this.state, [event.target.name]: value } );
+  };
+
+
+
     _handleSubmit(event){
       event.preventDefault();
-      this.props.onSubmit(this.state.content)
-      this.setState( { content: '' });
+      this.props.onSubmit(this.state.seatnumber, this.state.origin, this.state.destination, this.state.date );
+      this.setState( { seatnumber: '', origin: '', destination: '', date: '' });
       // seats();
     }
 
     render() {
-
+//
 //     seatsChoice = (seat) => {
 //
-//      let rows = ;
+//      let rows = 10;
 //      let cols = 6;
 //      let table = [];
 //
@@ -95,18 +122,18 @@ class ReservationForm extends Component {
           <form onSubmit={ this._handleSubmit }>
 
             <h3>Seat</h3>
-            <input placeholder="31B" onChange={ this._handleChange } value={this.state.seats}/>
+            <input type="text" name="seatnumber" placeholder="31B" onChange={ this._handleChange } value={ this.state.seatnumber }/>
 
             <h3>Origin</h3>
-            <input placeholder="London" onChange={ this._handleChange } value={this.state.origin}/>
+            <input type="text" name="origin" placeholder="London" onChange={ this._handleChange } value={this.state.origin}/>
 
             <h3>Destination</h3>
-            <input placeholder="Hong Kong" onChange={ this._handleChange } value={this.state.destination}/>
+            <input placeholder="Hong Kong" onChange={  (event) => {this.setState({ destination: event.target.value })}}/>
 
             <h3>Date</h3>
-            <input placeholder="2021-12-02" onChange={ this._handleChange } value={this.state.date}/>
+            <input placeholder="2021-12-02" onChange={  (event) => {this.setState({ date: event.target.value })}}/>
 
-            <div class="submit">
+            <div className="submit">
               <input type="submit" value="Reservation" />
             </div>
 
@@ -125,13 +152,40 @@ const ReservationList = (props) => {
     return (
 
       <div>
-        <div>
-           {props.reservation.map( (r) => <p>{r}</p>)}
+        {// <div>
+        //    {props.reservation.map( (r) => <p key={ r.id }>{r.seats}</p>)}
+        // </div>
+
+      }
+        <div >
+          <table>
+            <thead>
+                <tr>
+                  <th>Seatnumber</th>
+                  <th>Origin</th>
+                  <th>Destination</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {props.reservation.map((r) => (
+                  <tr key={r.id}>
+                    <td>{r.seatnumber}</td>
+                    <td>{r.origin}</td>
+                    <td>{r.destination}</td>
+                    <td>{r.date}</td>
+                  </tr>))}
+              </tbody>
+
+          </table>
+
+
+
+
         </div>
 
-        <div>
 
-        </div>
       </div>
     );
 
